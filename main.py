@@ -6,7 +6,7 @@
 # 3. Multipy 
 # 4. Divide
 
-# Import the operators
+# Import the operators, from operators.py
 from Operators import * 
 
 if __name__ == '__main__':
