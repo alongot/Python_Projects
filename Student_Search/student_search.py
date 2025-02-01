@@ -35,8 +35,18 @@ def find_student():
 		print("Invalid choice, try again: ")
 		return
      
-	search_term = input ("Enter the students information: ")
-     
+    
+	if search_type == 'id':
+		search_term = input("Please enter the students id: ")
+	elif search_type == 'name':
+		search_term = input("Please enter the students name: ")
+	elif search_type == 'age':
+		search_term = input("Please enter the students age: ")
+	elif search_type == 'major':
+		search_term = input("Please enter the students major: ")
+	else:
+		search_term = input("Please enter the students gpa: ")
+
 	student = linear_search(students, search_term, search_type)
     
 	if student:
