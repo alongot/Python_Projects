@@ -3,11 +3,11 @@
 #######################################
 
 # Create a dictionary with students information
-students = {
+students = [
 	{"name": "Jane Smith", "id": "S002", "age": 22, "major": "Biology", "GPA": 3.5},
     {"name": "Mark Lee", "id": "S003", "age": 21, "major": "Physics", "GPA": 3.9},
     {"name": "Emily Davis", "id": "S004", "age": 23, "major": "Mathematics", "GPA": 3.8}
-}
+]
 
 # Function to search for students
 def linear_search(students, search_term, search_type = "name"):
@@ -25,5 +25,28 @@ def linear_search(students, search_term, search_type = "name"):
         elif search_type == "gpa" and str(student["GPA"]) == search_term:
             return student
     return None  # Return None if the student is not found
+
+## Greeting function to find student
+def find_student():
+	print("Welcome to student finder, we can locate student based on name, id, age, major, and gpa")
+	search_type = input("Please enter an option: ")
+
+	if search_type not in ['name', 'id', 'age', 'major', 'gpa']:
+		print("Invalid choice, try again: ")
+		return
+     
+	search_term = input ("Enter the students information: ")
+     
+	student = linear_search(students, search_term, search_type)
+    
+	if student:
+		print("\nStudent Found!")
+		print(f"Name: {student['name']}")
+		print(f"ID: {student['id']}")
+		print(f"Age: {student['age']}")
+		print(f"Major: {student['major']}")
+		print(f"GPA: {student['GPA']}")
+	else:
+		print("\nStudent not found.")
 
 
