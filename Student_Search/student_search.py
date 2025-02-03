@@ -28,35 +28,52 @@ def linear_search(students, search_term, search_type = "name"):
 
 ## Greeting function to find student
 def find_student():
-	print("Welcome to student finder, we can locate student based on name, id, age, major, and gpa")
-	search_type = input("Please enter an option: ")
+	print("Welcome to student finder, we can locate students based on name, id, age, major, and GPA")
 
-	if search_type not in ['name', 'id', 'age', 'major', 'gpa']:
-		print("Invalid choice, try again: ")
-		return
-     
-    
-	if search_type == 'id':
-		search_term = input("Please enter the students id: ")
-	elif search_type == 'name':
-		search_term = input("Please enter the students name: ")
-	elif search_type == 'age':
-		search_term = input("Please enter the students age: ")
-	elif search_type == 'major':
-		search_term = input("Please enter the students major: ")
-	else:
-		search_term = input("Please enter the students gpa: ")
+	while True:
+		try:
+			search_type = input("Please enter an option (name, id, age, major, gpa): ").strip().lower()
 
-	student = linear_search(students, search_term, search_type)
-    
-	if student:
-		print("\nStudent Found!")
-		print(f"Name: {student['name']}")
-		print(f"ID: {student['id']}")
-		print(f"Age: {student['age']}")
-		print(f"Major: {student['major']}")
-		print(f"GPA: {student['GPA']}")
-	else:
-		print("\nStudent not found.")
+			if search_type not in ['name', 'id', 'age', 'major', 'gpa']:
+				raise ValueError("Invalid choice, please enter a valid option.")
+
+		except ValueError as e:
+			print(e)  # Display error message and retry
+			continue
+
+		while True:
+			try:
+				if search_type in ['age', 'gpa']:
+					search_term = float(input(f"Please enter the student's {search_type}: "))  # Ensure numeric input
+				elif search_type == 'id':
+					search_term = int(input("Please enter the student's ID: "))  # Ensure ID is an integer
+				else:
+					search_term = input(f"Please enter the student's {search_type}: ").strip()
+				break
+			except ValueError:
+				print("Invalid input, please enter a number where required.")
+				
+			
+
+		student = linear_search(students, search_term, search_type)
+
+		if student:
+			print("\nStudent Found!")
+			print(f"Name: {student['name']}")
+			print(f"ID: {student['id']}")
+			print(f"Age: {student['age']}")
+			print(f"Major: {student['major']}")
+			print(f"GPA: {student['GPA']}")
+
+		else:
+			print("\nStudent not found.")
+
+		retry = input("Would you like to find another student (Yes or No): ").strip().lower()
+		
+		if retry not in ['yes', 'Yes', 'y']:
+			print("Program exiting, have a wonderful day!")
+			break
+
+			
 
 
