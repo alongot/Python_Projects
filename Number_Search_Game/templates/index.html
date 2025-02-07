@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Binary Search Game</title>
+</head>
+<body>
+    <h1>Think of a Number Between 1 and 100</h1>
+    {% if game_over %}
+        <h2>Guessed it in {{ attempts }} attempts!</h2>
+        <a href="{{ url_for('reset') }}">Play Again</a>
+    {% elif error %}
+        <h2>{{ error }}</h2>
+        <a href="{{ url_for('reset') }}">Restart</a>
+    {% else %}
+        <h2>Is your number {{ guess }}?</h2>
+        <form method="POST">
+            <button type="submit" name="response" value="higher">Higher</button>
+            <button type="submit" name="response" value="lower">Lower</button>
+            <button type="submit" name="response" value="correct">Correct</button>
+        </form>
+    {% endif %}
+</body>
+</html>

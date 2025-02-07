@@ -1,34 +1,37 @@
-############
-#Function to implement number search
-############
+from flask import Flask, render_template, request, session, redirect, url_for
 
-def binary_search_game():
-	print("Think of a number between 1-100, and I'll try to guess it")
+app = Flask(__name__, template_folder="templates")
+app.secret_key = 'supersecretkey'  # Required for session management
 
-	low = 1
-	high = 100
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if 'low' not in session or 'high' not in session:
+        session['low'] = 1
+        session['high'] = 100
+        session['attempts'] = 0
 
-	attempts = 0
+    if request.method == 'POST':
+        session['attempts'] += 1
+        user_input = request.form['response']
+        guess = (session['low'] + session['high']) // 2
 
-	while low <= high:
-		attempts += 1
-		guess = (low + high) // 2
+        if user_input == 'higher':
+            session['low'] = guess + 1
+        elif user_input == 'lower':
+            session['high'] = guess - 1
+        elif user_input == 'correct':
+            return render_template('index.html', guess=guess, attempts=session['attempts'], game_over=True)
+        
+        if session['low'] > session['high']:
+            return render_template('index.html', error="Oops! Did you change your number?", game_over=True)
+        
+    guess = (session['low'] + session['high']) // 2
+    return render_template('index.html', guess=guess, attempts=session['attempts'])
 
-		print(f"Is your number {guess}?")
-		user_guess = input("Enter h if higher, enter l if lower, c if correct: ")
+@app.route('/reset')
+def reset():
+    session.clear()  # Clears all session variables
+    return redirect(url_for('index'))  # Redirects back to the start
 
-		if user_guess not in ['h', 'l', 'c']:
-			print("Invalid input try again! ")
-			user_guess = input("Enter h if higher, enter l if lower, c if correct: ")
-
-		if user_guess == "h":
-			low = guess + 1
-		elif user_guess == "l":
-			high = guess - 1
-		else:
-			print (f"Guessed after {attempts} attempts. Your number is {guess}.")
-			return 
-	
-		
-
-		
+if __name__ == "__main__":
+    app.run(debug=True)
