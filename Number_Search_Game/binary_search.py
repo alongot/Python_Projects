@@ -22,14 +22,12 @@ def binary_search_game():
 			user_guess = input("Enter h if higher, enter l if lower, c if correct: ")
 
 		if user_guess == "h":
-			low = high + 1
-			return low
+			low = guess + 1
 		elif user_guess == "l":
-			high = low - 1
-			return high
+			high = guess - 1
 		else:
-			print (f"Guessed after {attempts} attempts ")
-			return guess
+			print (f"Guessed after {attempts} attempts. Your number is {guess}.")
+			return 
 	
 		
 
