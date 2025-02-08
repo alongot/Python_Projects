@@ -2,6 +2,7 @@
 # Algorithm to find students, and retrieve name and ID
 #######################################
 
+# Import pprint library
 import pprint
 
 # Create a dictionary with students information
